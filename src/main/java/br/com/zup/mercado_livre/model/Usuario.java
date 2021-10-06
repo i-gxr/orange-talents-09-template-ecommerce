@@ -1,14 +1,11 @@
 package br.com.zup.mercado_livre.model;
 
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,7 +35,7 @@ public class Usuario {
     }
 
     private void encryptingPassword(String senha) {
-        this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());
+        this.senha = new BCryptPasswordEncoder().encode(senha);
     }
 
 }

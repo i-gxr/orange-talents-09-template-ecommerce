@@ -1,5 +1,6 @@
 package br.com.zup.mercado_livre.controllers.requests;
 
+import br.com.zup.mercado_livre.controllers.validations.*;
 import br.com.zup.mercado_livre.model.Usuario;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ public class UsuarioRequest {
 
     @NotBlank
     @Email
+    @UniqueValue(domainClass = Usuario.class, fieldName = "login")
     private String login;
 
     @NotBlank
