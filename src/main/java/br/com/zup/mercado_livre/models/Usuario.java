@@ -1,4 +1,4 @@
-package br.com.zup.mercado_livre.model;
+package br.com.zup.mercado_livre.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

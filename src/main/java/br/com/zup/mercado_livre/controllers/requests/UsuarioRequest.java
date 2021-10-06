@@ -1,7 +1,7 @@
 package br.com.zup.mercado_livre.controllers.requests;
 
 import br.com.zup.mercado_livre.controllers.validations.*;
-import br.com.zup.mercado_livre.model.Usuario;
+import br.com.zup.mercado_livre.models.Usuario;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
