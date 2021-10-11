@@ -2,6 +2,7 @@ package br.com.zup.mercado_livre.controllers;
 
 import br.com.zup.mercado_livre.controllers.exceptions.*;
 import br.com.zup.mercado_livre.controllers.requests.*;
+import br.com.zup.mercado_livre.controllers.utils.*;
 import br.com.zup.mercado_livre.models.*;
 import br.com.zup.mercado_livre.repositories.*;
 import org.springframework.beans.factory.annotation.*;
@@ -26,6 +27,9 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository repository;
 
+    @Autowired
+    private ImagemUpload imagemUpload;
+
     @PostMapping
     @Transactional
     public void insert(@RequestBody @Valid ProdutoRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
@@ -35,14 +39,12 @@ public class ProdutoController {
 
     @PostMapping("/{id}/images")
     @Transactional
-    public void uploadImages(@PathVariable Long id, @RequestParam(required = true) MultipartFile[] imagens, @AuthenticationPrincipal Usuario usuarioLogado) {
+    public void uploadImages(@PathVariable Long id, @Valid ImagemProdutoRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
         Produto produto = repository.findById(id).orElseThrow(ProdutoNotFoundException::new);
         if (!usuarioLogado.correspondeProduto(produto))
             throw new ProdutoForbiddenException();
-        if (imagens[0].isEmpty())
-            throw new ImagemNotValidException();
 
-        List<ImagemProduto> imagensProduto = Arrays.stream(imagens).map(i -> new ImagemProduto(i, produto)).collect(Collectors.toList());
+        Set<ImagemProduto> imagensProduto = imagemUpload.uploadImage(request, produto);
         imagensProduto.stream().forEach(i -> entityManager.persist(i));
     }
 

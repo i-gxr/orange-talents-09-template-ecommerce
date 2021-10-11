@@ -22,29 +22,14 @@ public class ImagemProduto {
     @Lob
     @NotBlank
     @Column(nullable = false)
-    private String base64;
+    private String link;
 
     @ManyToOne
     private Produto produto;
 
-    public ImagemProduto(@NotNull MultipartFile image, Produto produto) {
-        imageToBase64(image);
+    public ImagemProduto(String link, Produto produto) {
+        this.link = link;
         this.produto = produto;
-    }
-
-    private void imageToBase64(MultipartFile image) {
-        if (!Arrays.asList("image/jpeg", "image/png", "image/gif").contains(image.getContentType().toString()))
-            throw new ImagemNotValidException();
-
-        try {
-            StringBuilder sb = new StringBuilder();
-            sb.append("data:image/png;base64,");
-            sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(image.getBytes(), false)));
-            this.base64 = sb.toString();
-        }
-            catch (IOException e) {
-                throw new ImagemNotValidException();
-            }
     }
 
 }
