@@ -1,5 +1,6 @@
 package br.com.zup.mercado_livre.configs.security;
 
+import br.com.zup.mercado_livre.controllers.exceptions.*;
 import br.com.zup.mercado_livre.models.*;
 import br.com.zup.mercado_livre.repositories.*;
 import org.springframework.security.authentication.*;
@@ -31,7 +32,7 @@ public class AuthenticationByTokenFilter extends OncePerRequestFilter {
 
     private void authenticateUsuario(String token) {
         Long idUsuario = tokenService.getIdUsuario(token);
-        Usuario usuario = repository.findById(idUsuario).get();
+        Usuario usuario = repository.findById(idUsuario).orElseThrow(UsuarioNotFoundException::new);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

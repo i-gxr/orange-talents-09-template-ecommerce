@@ -53,6 +53,10 @@ public class Usuario implements UserDetails {
         return Objects.equals(id, usuario.id) && Objects.equals(login, usuario.login) && Objects.equals(senha, usuario.senha) && Objects.equals(dataHoraCadastro, usuario.dataHoraCadastro) && Objects.equals(perfis, usuario.perfis);
     }
 
+    public boolean correspondeProduto(Produto produto) {
+        return this.id == produto.getUsuario().getId();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, login, senha, dataHoraCadastro, perfis);

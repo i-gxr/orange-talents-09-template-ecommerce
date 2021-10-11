@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import java.util.*;
 
 @Entity
-@Table(name = "tb_caracteristica")
+@Table(name = "tb_caracteristica_produto")
 public class Caracteristica {
 
     @Id

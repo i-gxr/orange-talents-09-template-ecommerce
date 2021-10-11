@@ -60,4 +60,11 @@ public class Produto {
         this.usuario = usuario;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
 }
