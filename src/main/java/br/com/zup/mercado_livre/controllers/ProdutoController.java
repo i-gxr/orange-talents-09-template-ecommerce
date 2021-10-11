@@ -27,6 +27,9 @@ public class ProdutoController {
     @Autowired
     private ImagemUpload imagemUpload;
 
+    @Autowired
+    private EmailSend emailSend;
+
     @PostMapping
     @Transactional
     public void insert(@RequestBody @Valid ProdutoRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
@@ -51,6 +54,14 @@ public class ProdutoController {
         Produto produto = repository.findById(id).orElseThrow(ProdutoNotFoundException::new);
         Opiniao opiniao = request.toModel(produto, usuarioLogado);
         entityManager.persist(opiniao);
+    }
+
+    @PostMapping("/{id}/questions")
+    @Transactional
+    public void addQuestion(@PathVariable Long id, @RequestBody @Valid PerguntaRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
+        Produto produto = repository.findById(id).orElseThrow(ProdutoNotFoundException::new);
+        Pergunta pergunta = emailSend.sendEmail(request, produto, usuarioLogado);
+        entityManager.persist(pergunta);
     }
 
 }
