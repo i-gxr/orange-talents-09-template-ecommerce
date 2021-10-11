@@ -7,6 +7,6 @@ import java.util.*;
 
 public interface ImagemUpload {
 
-    Set<ImagemProduto> uploadImage(ImagemProdutoRequest request, Produto produto);
+    Set<Imagem> uploadImage(ImagemRequest request, Produto produto);
 
 }

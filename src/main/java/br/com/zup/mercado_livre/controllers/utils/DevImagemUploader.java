@@ -18,8 +18,8 @@ import java.util.stream.*;
 public class DevImagemUploader implements ImagemUpload {
 
     @Override
-    public Set<ImagemProduto> uploadImage(ImagemProdutoRequest request, Produto produto) {
-        return request.getImagens().stream().map(i -> new ImagemProduto(imageToBase64(i), produto)).collect(Collectors.toSet());
+    public Set<Imagem> uploadImage(ImagemRequest request, Produto produto) {
+        return request.getImagens().stream().map(i -> new Imagem(imageToBase64(i), produto)).collect(Collectors.toSet());
     }
 
     private String imageToBase64(MultipartFile image) {

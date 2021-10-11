@@ -13,7 +13,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "tb_imagem_produto")
-public class ImagemProduto {
+public class Imagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class ImagemProduto {
     @ManyToOne
     private Produto produto;
 
-    public ImagemProduto(String link, Produto produto) {
+    public Imagem(String link, Produto produto) {
         this.link = link;
         this.produto = produto;
     }

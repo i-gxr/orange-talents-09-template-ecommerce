@@ -7,13 +7,13 @@ import javax.validation.constraints.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class ImagemProdutoRequest {
+public class ImagemRequest {
 
     @Size(min = 1)
     @NotNull
     private Set<MultipartFile> imagens;
 
-    public ImagemProdutoRequest(Set<MultipartFile> imagens) {
+    public ImagemRequest(Set<MultipartFile> imagens) {
         this.imagens = imagens;
     }
 
