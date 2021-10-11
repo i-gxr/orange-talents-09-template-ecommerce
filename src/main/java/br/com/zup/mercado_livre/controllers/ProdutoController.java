@@ -60,8 +60,9 @@ public class ProdutoController {
     @Transactional
     public void addQuestion(@PathVariable Long id, @RequestBody @Valid PerguntaRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
         Produto produto = repository.findById(id).orElseThrow(ProdutoNotFoundException::new);
-        Pergunta pergunta = emailSend.sendEmail(request, produto, usuarioLogado);
+        Pergunta pergunta = request.toModel(produto, usuarioLogado);
         entityManager.persist(pergunta);
+        emailSend.sendEmail(pergunta);
     }
 
 }

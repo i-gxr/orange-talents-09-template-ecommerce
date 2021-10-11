@@ -64,6 +64,10 @@ public class Produto {
         return id;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }

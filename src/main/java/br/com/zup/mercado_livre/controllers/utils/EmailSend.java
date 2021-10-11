@@ -5,6 +5,6 @@ import br.com.zup.mercado_livre.models.*;
 
 public interface EmailSend {
 
-    Pergunta sendEmail(PerguntaRequest request, Produto produto, Usuario usuario);
+    void sendEmail(Pergunta pergunta);
 
 }

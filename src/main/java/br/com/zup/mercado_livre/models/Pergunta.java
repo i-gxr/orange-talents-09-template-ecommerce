@@ -31,4 +31,16 @@ public class Pergunta {
         this.usuario = usuario;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
 }
