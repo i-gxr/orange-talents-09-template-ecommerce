@@ -1,4 +1,4 @@
-package br.com.zup.mercado_livre.controllers.dto;
+package br.com.zup.mercado_livre.controllers.dto.validations;
 
 public class FieldErrorOutputDto {
 

@@ -68,7 +68,54 @@ public class Produto {
         return nome;
     }
 
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public Integer getQtdDisponivel() {
+        return qtdDisponivel;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public LocalDateTime getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
+
+    public Set<Caracteristica> getCaracteristicas() {
+        return new HashSet<Caracteristica>(this.caracteristicas);
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
+
+    public List<Imagem> getImagens(EntityManager entityManager) {
+        List<Imagem> imagens = entityManager.createQuery("SELECT i FROM Imagem i WHERE i.produto.id = :id", Imagem.class)
+                .setParameter("id", this.id).getResultList();
+        return imagens;
+    }
+
+    public List<Opiniao> getOpinioes(EntityManager entityManager) {
+        List<Opiniao> opinioes = entityManager.createQuery("SELECT o FROM Opiniao o WHERE o.produto.id = :id", Opiniao.class)
+                .setParameter("id", this.id).getResultList();
+        return opinioes;
+    }
+
+    public List<Pergunta> getPerguntas(EntityManager entityManager) {
+        List<Pergunta> perguntas = entityManager.createQuery("SELECT p FROM Pergunta p WHERE p.produto.id = :id", Pergunta.class)
+                .setParameter("id", this.id).getResultList();
+        return perguntas;
+    }
+
+    public Double getMediaAvaliacao(EntityManager entityManager) {
+        return getOpinioes(entityManager).stream().mapToDouble(Opiniao::getNota).average().orElse(0);
+    }
+
+    public Integer getNumTotalAvaliacao(EntityManager entityManager) {
+        return getOpinioes(entityManager).size();
+    }
+
 }

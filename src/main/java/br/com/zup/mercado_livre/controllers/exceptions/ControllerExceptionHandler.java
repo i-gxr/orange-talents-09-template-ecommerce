@@ -1,6 +1,6 @@
 package br.com.zup.mercado_livre.controllers.exceptions;
 
-import br.com.zup.mercado_livre.controllers.dto.*;
+import br.com.zup.mercado_livre.controllers.dto.validations.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.*;
 import org.springframework.context.i18n.*;

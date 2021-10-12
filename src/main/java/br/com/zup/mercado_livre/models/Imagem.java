@@ -27,9 +27,16 @@ public class Imagem {
     @ManyToOne
     private Produto produto;
 
+    @Deprecated
+    public Imagem() {}
+
     public Imagem(String link, Produto produto) {
         this.link = link;
         this.produto = produto;
+    }
+
+    public String getLink() {
+        return link;
     }
 
 }

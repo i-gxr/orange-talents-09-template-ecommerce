@@ -1,7 +1,7 @@
 package br.com.zup.mercado_livre.controllers;
 
 import br.com.zup.mercado_livre.configs.security.*;
-import br.com.zup.mercado_livre.controllers.dto.*;
+import br.com.zup.mercado_livre.controllers.dto.validations.*;
 import br.com.zup.mercado_livre.controllers.requests.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;

@@ -1,29 +1,13 @@
-package br.com.zup.mercado_livre.models;
+package br.com.zup.mercado_livre.controllers.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.*;
 
-@Entity
-@Table(name = "tb_caracteristica_produto")
-public class Caracteristica {
+public class CaracteristicaDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank
-    @Column(nullable = false)
     private String nome;
-
-    @NotBlank
-    @Column(nullable = false)
     private String descricao;
 
-    @Deprecated
-    public Caracteristica() {}
-
-    public Caracteristica(String nome, String descricao) {
+    public CaracteristicaDto(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
     }
@@ -40,7 +24,7 @@ public class Caracteristica {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Caracteristica that = (Caracteristica) o;
+        CaracteristicaDto that = (CaracteristicaDto) o;
         return Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao);
     }
 

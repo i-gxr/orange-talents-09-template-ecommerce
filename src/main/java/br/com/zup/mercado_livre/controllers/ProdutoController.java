@@ -1,7 +1,9 @@
 package br.com.zup.mercado_livre.controllers;
 
+import br.com.zup.mercado_livre.controllers.dto.*;
 import br.com.zup.mercado_livre.controllers.exceptions.*;
 import br.com.zup.mercado_livre.controllers.requests.*;
+import br.com.zup.mercado_livre.controllers.responses.*;
 import br.com.zup.mercado_livre.controllers.utils.*;
 import br.com.zup.mercado_livre.models.*;
 import br.com.zup.mercado_livre.repositories.*;
@@ -13,6 +15,7 @@ import javax.persistence.*;
 import javax.transaction.*;
 import javax.validation.*;
 import java.util.*;
+import java.util.stream.*;
 
 @RestController
 @RequestMapping("/products")
@@ -65,4 +68,11 @@ public class ProdutoController {
         emailSend.sendEmail(pergunta);
     }
 
+    @GetMapping("/{id}")
+    @Transactional
+    public ProdutoResponse findProduct(@PathVariable Long id) {
+        Produto produto = repository.findById(id).orElseThrow(ProdutoNotFoundException::new);
+        ProdutoResponse response = new ProdutoResponse(produto, entityManager);
+        return response;
+    }
 }

@@ -32,12 +32,31 @@ public class Opiniao {
     @ManyToOne
     private Usuario usuario;
 
+    @Deprecated
+    public Opiniao() {}
+
     public Opiniao(Integer nota, String titulo, String descricao, Produto produto, Usuario usuario) {
         this.nota = nota;
         this.titulo = titulo;
         this.descricao = descricao;
         this.produto = produto;
         this.usuario = usuario;
+    }
+
+    public Integer getNota() {
+        return nota;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
 }

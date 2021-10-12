@@ -19,25 +19,11 @@ public class DevImagemUploader implements ImagemUpload {
 
     @Override
     public Set<Imagem> uploadImage(ImagemRequest request, Produto produto) {
-        return request.getImagens().stream().map(i -> new Imagem(imageToBase64(i), produto)).collect(Collectors.toSet());
+        return request.getImagens().stream().map(i -> new Imagem(imageGeneratedLink(i), produto)).collect(Collectors.toSet());
     }
 
-    private String imageToBase64(MultipartFile image) {
-        if (image.getContentType() == null)
-            throw new ImagemNotValidException();
-
-        if (!Arrays.asList("image/jpeg", "image/png", "image/gif").contains(image.getContentType().toString()))
-            throw new ImagemNotValidException();
-
-        try {
-            StringBuilder sb = new StringBuilder();
-            sb.append("data:image/png;base64,");
-            sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(image.getBytes(), false)));
-            return sb.toString();
-        }
-            catch (IOException e) {
-                throw new ImagemNotValidException();
-            }
+    private String imageGeneratedLink(MultipartFile image) {
+        return "https://zup.images/" + image.getOriginalFilename();
     }
 
 }
