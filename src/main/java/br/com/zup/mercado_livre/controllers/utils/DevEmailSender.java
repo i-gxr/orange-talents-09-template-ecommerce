@@ -17,4 +17,11 @@ public class DevEmailSender implements EmailSend {
                          + "\nRemetente: " + pergunta.getUsuario().getUsername());
     }
 
+    @Override
+    public void sendEmail(Compra compra) {
+        System.out.println("Nova mensagem para: " + compra.getProduto().getUsuario().getUsername()
+                         + "\nIntenção de compra do produto " + compra.getProduto().getNome()
+                         + "\nInteressado: " + compra.getUsuario().getUsername());
+    }
+
 }

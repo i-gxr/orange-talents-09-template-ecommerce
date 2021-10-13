@@ -7,4 +7,6 @@ public interface EmailSend {
 
     void sendEmail(Pergunta pergunta);
 
+    void sendEmail(Compra compra);
+
 }

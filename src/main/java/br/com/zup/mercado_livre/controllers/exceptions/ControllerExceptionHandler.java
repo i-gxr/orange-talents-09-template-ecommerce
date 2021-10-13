@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.*;
 import org.springframework.context.i18n.*;
 import org.springframework.http.*;
+import org.springframework.http.converter.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,22 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(UsuarioNotFoundException.class)
     public Map<String, String> handleUsuarioNotFoundError(BussinessException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message:", e.getMessage());
+        return response;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(QuantidadeCompraException.class)
+    public Map<String, String> handleQuantidadeCompraError(BussinessException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message:", e.getMessage());
+        return response;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Map<String, String> handleGatewayPagamentoError(HttpMessageNotReadableException e) {
         Map<String, String> response = new HashMap<>();
         response.put("message:", e.getMessage());
         return response;

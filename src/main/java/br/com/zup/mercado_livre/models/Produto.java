@@ -1,5 +1,7 @@
 package br.com.zup.mercado_livre.models;
 
+import br.com.zup.mercado_livre.controllers.exceptions.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.*;
@@ -118,4 +120,9 @@ public class Produto {
         return getOpinioes(entityManager).size();
     }
 
+    public void abateEstoque(Integer quantidade) {
+        if (quantidade > qtdDisponivel || quantidade < 0)
+            throw new QuantidadeCompraException();
+        this.qtdDisponivel -= quantidade;
+    }
 }
