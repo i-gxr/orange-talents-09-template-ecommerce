@@ -1,10 +1,14 @@
 package br.com.zup.mercado_livre.models;
 
+import br.com.zup.mercado_livre.controllers.exceptions.*;
+import br.com.zup.mercado_livre.controllers.utils.*;
 import br.com.zup.mercado_livre.models.enums.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.*;
+import java.util.*;
+import java.util.stream.*;
 
 @Entity
 @Table(name = "tb_compra_produto")
@@ -38,6 +42,12 @@ public class Compra {
     @ManyToOne
     private Usuario usuario;
 
+    @OneToMany(cascade=CascadeType.MERGE)
+    private Set<Transacao> transacoes;
+
+    @Deprecated
+    public Compra() {}
+
     public Compra(Integer quantidade, Gateway gateway, Produto produto, Usuario usuario) {
         this.quantidade = quantidade;
         this.gateway = gateway;
@@ -61,5 +71,27 @@ public class Compra {
 
     public Gateway getGateway() {
         return gateway;
+    }
+
+    private void changeStatusCompleted() {
+        if (isSuccessfullyCompleted())
+            this.status = StatusCompra.FINALIZADA;
+    }
+
+    public void addTransacao(PagamentoGateway request) {
+        Set<Transacao> transacoes = this.transacoes.stream().filter(t -> t.getStatusTransacao().equals(StatusTransacao.SUCESSO)).collect(Collectors.toSet());
+        if (!transacoes.isEmpty())
+            throw new TransacaoConcluidaException();
+
+        if (this.transacoes.contains(request.toTransacao(this)))
+            throw new TransacaoJaExistenteException();
+
+        this.transacoes.add(request.toTransacao(this));
+        changeStatusCompleted();
+    }
+
+    public boolean isSuccessfullyCompleted() {
+        Set<Transacao> transacoes = this.transacoes.stream().filter(t -> t.getStatusTransacao().equals(StatusTransacao.SUCESSO)).collect(Collectors.toSet());
+        return !transacoes.isEmpty();
     }
 }

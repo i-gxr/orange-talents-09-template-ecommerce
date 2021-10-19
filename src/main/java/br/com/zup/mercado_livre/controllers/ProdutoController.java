@@ -83,14 +83,16 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.FOUND)
     @PostMapping("/{id}/buy")
     @Transactional
-    public URI buyProduct(@PathVariable Long id, @RequestBody @Valid CompraRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
+    public Map<String, String> buyProduct(@PathVariable Long id, @RequestBody @Valid CompraRequest request, @AuthenticationPrincipal Usuario usuarioLogado) {
         Produto produto = repository.findById(id).orElseThrow(ProdutoNotFoundException::new);
         Compra compra = request.toModel(produto, usuarioLogado);
         produto.abateEstoque(request.getQuantidade());
         entityManager.persist(compra);
         entityManager.persist(produto);
         emailSend.sendEmail(compra);
-        return compra.getGateway().getLink(compra.getId(), "https://mercadolivre.com.br");
+        Map<String, String> response = new HashMap<>();
+        response.put("redirect:", compra.getGateway().getLink(compra.getId(), "https://mercadolivre.com.br"));
+        return response;
     }
 
 }
